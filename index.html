@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Osamos Tic-tac-toe</title>
+</head>
+<body>
+    <div class="header">
+        <h5>Osamos Tic-Tac-Toe Game</h5>
+    </div>
+    <div class="main">
+        <div class="p_vs_p mainCon">
+            <div class="p_vs_pContainer con">
+                <div class="p_vs_pContainerHeader conHeader">
+                    <div class="player1 player">
+                        <img src="player1.jpeg" alt="player 1 image">
+                        <span>Player 1</span>
+                    </div>
+                    <div class="vs">vs</div>
+                    <div class="player2 player">
+                        <img src="player2.jpeg" alt="player 2 image">
+                        <span>Player 2</span>
+                    </div>
+                </div>
+                <div class="startBtn"><button class="p_start">Start Game</button></div>
+            </div>
+        </div>
+        <div class="p_vs_ai mainCon">
+            <div class="p_vs_aiContainer con">
+                <div class="p_vs_aiContainerHeader conHeader">
+                    <div class="player1 player">
+                        <img src="player1.jpeg" alt="player 1 image">
+                        <span>Player 1</span>
+                    </div>
+                    <div class="vs">vs</div>
+                    <div class="player2 ai player">
+                        <img src="ai.jpeg" alt="ai image">
+                        <span>AI</span>
+                    </div>
+                </div>
+                <div class="startBtn"><button class="ai_start">Start Game</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="game">
+        <div class="gameCon">
+            <div class="gameDetails">
+                <div class="playersPlaying">
+                    <div class="playerDet">
+                        <span class="playerDet1">----------</span>
+                    </div>
+                    <div class="vsDet">vs</div>
+                    <div class="playerDet">
+                        <span class="playerDet2">----------</span>
+                    </div>
+                </div>
+                <div class="scores"><span class="firstScore">0</span>  :  <span class="secondScore">0</span></div>
+            </div>
+            <div class="gameBoard"></div>
+        </div>
+    </div>
+</body>
+</html>
