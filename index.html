@@ -32,7 +32,7 @@
                             <input type="text" id="player1Name" placeholder="Player 1 Name" class="input"><br>
                             <input type="text" id="player2Name" placeholder="Player 2 Name" class="input"><br>
                             <div id="submit">
-                                <button id="submitForm" type="submit">Submit</button>
+                                <button id="submitForm1" class="submitForm" type="submit">Submit</button>
                             </div>
                         </form>
                     </dialog>
@@ -54,6 +54,15 @@
                 </div>
                 <div class="startBtn">
                     <button class="ai_start">Start Game</button>
+                    <dialog id="dialog2">
+                        <h3>Enter Name</h3>
+                        <form id="form">
+                            <input type="text" id="aiPlayer" placeholder="Player 1 Name" class="input"><br>
+                            <div id="submit">
+                                <button id="submitForm2" class="submitForm" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </dialog>
                 </div>
             </div>
         </div>
@@ -73,6 +82,10 @@
                 <div class="scores"><span class="firstScore">0</span>  :  <span class="secondScore">0</span></div>
             </div>
             <div class="gameBoard"></div>
+            <dialog id="dialog3">
+                <p><span class="winner">Yay</span> You Won The Game</p>
+                <button id="submit" class="submitForm" type="submit">Close</button>
+            </dialog>
         </div>
     </div>
     <script src="script.js"></script>
