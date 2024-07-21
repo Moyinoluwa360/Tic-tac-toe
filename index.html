@@ -24,7 +24,19 @@
                         <span>Player 2</span>
                     </div>
                 </div>
-                <div class="startBtn"><button class="p_start">Start Game</button></div>
+                <div class="startBtn">
+                    <button class="p_start">Start Game</button>
+                    <dialog id="dialog1">
+                        <h3>Enter Name</h3>
+                        <form id="form">
+                            <input type="text" id="player1Name" placeholder="Player 1 Name" class="input"><br>
+                            <input type="text" id="player2Name" placeholder="Player 2 Name" class="input"><br>
+                            <div id="submit">
+                                <button id="submitForm" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </dialog>
+                </div>
             </div>
         </div>
         <div class="p_vs_ai mainCon">
@@ -40,7 +52,9 @@
                         <span>AI</span>
                     </div>
                 </div>
-                <div class="startBtn"><button class="ai_start">Start Game</button></div>
+                <div class="startBtn">
+                    <button class="ai_start">Start Game</button>
+                </div>
             </div>
         </div>
     </div>
@@ -48,12 +62,12 @@
         <div class="gameCon">
             <div class="gameDetails">
                 <div class="playersPlaying">
-                    <div class="playerDet">
-                        <span class="playerDet1">----------</span>
+                    <div class="playerDet playerDet1">
+                        <span class="playerSpan1">----------</span>
                     </div>
                     <div class="vsDet">vs</div>
-                    <div class="playerDet">
-                        <span class="playerDet2">----------</span>
+                    <div class="playerDet playerDet2">
+                        <span class="playerSpan2">----------</span>
                     </div>
                 </div>
                 <div class="scores"><span class="firstScore">0</span>  :  <span class="secondScore">0</span></div>
@@ -61,5 +75,6 @@
             <div class="gameBoard"></div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
