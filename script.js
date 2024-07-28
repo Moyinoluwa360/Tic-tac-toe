@@ -128,7 +128,7 @@ function clearBoard(){
 
     // winning message
     const winningDialog = document.querySelector("#dialog3")
-    const winningSubmit = document.querySelector("#submit")
+    const winningSubmit = document.querySelector("#closeWinningMessage")
 
     winningDialog.showModal()
     winningSubmit.addEventListener("click",()=>{
@@ -139,133 +139,143 @@ function clearBoard(){
 let player1Score = 0
 let player2Score = 0
 
-function checkForWin(boolean,player){
-    if (Gameboard.isFull()){
-        deleteGrid()
-        if (player === "player1" || player === "player2"){
-            playGame("pvp")
+function checkForWin(player,gameType){
+    if (player === "player1"){
+        player1Score = player1Score + 1
+        // display on board
+        const firstScore = document.querySelector(".firstScore")
+        firstScore.textContent = player1Score
+        console.log(player1Score)
+        if(player1Score === 3){
+            clearBoard()
+            player1Score = 0
+            player2Score = 0
+            console.log("ya1 u win")
         }else{
-            playGame()
+            deleteGrid()
+            console.log("let continue 1")
+            if(gameType === "p_v_p"){
+                playGame("p_v_p")
+            }else{
+                playGame()
+            }
         }
-        
+            
+    }else if(player === "player2"){
+        player2Score = player2Score + 1
+        // display on board
+        const secondScore = document.querySelector(".secondScore")
+        secondScore.textContent = player2Score
+        console.log(player2Score)
+        if(player2Score === 3){
+            clearBoard()
+            player1Score = 0
+            player2Score = 0
+            console.log("ya2 u win")
+        }else{
+            deleteGrid()
+            console.log("lets continue 2")
+            if(gameType === "p_v_p"){
+                playGame("p_v_p")
+            }else{
+                playGame()
+            }
+        }
+    }
+ }
+
+function playGame(gameType){
+    if (gameType === "p_v_p"){
+        let whichPlayer = true;
+        createGrid();
+        const divsArr = document.querySelectorAll(".grid-item");
+
+        divsArr.forEach((div) => {
+            div.addEventListener("click", handlePlayerMove, { once: true });
+        });
+
+        function handlePlayerMove(event) {
+            const div = event.target;
+            const playerSymb = whichPlayer ? players().player1.symb : players().player2.symb;
+            const playerPosition = div.getAttribute("id");
+
+            div.textContent = playerSymb;
+            Gameboard.play(playerSymb, playerPosition);
+
+            const winner = Gameboard.check();
+            if (winner) {
+                checkForWin(whichPlayer ? "player1" : "player2","p_v_p");
+                return;
+            }
+            if (Gameboard.isFull() === true){
+                console.log("full board")
+                deleteGrid()
+                playGame("p_v_p")
+                
+            }
+            whichPlayer = !whichPlayer;
+        }
     }else{
-        if (player === "player1"){
-            if (boolean === true){
-                player1Score = player1Score + 1
-                // display on board
-                const firstScore = document.querySelector(".firstScore")
-                firstScore.textContent = player1Score
-                console.log(player1Score)
-                if(player1Score === 3){
-                    clearBoard()
-                    player1Score = 0
-                    player2Score = 0
-                    console.log("ya1 u win")
-                }else{
-                    deleteGrid()
-                    console.log("let continue 1")
-                    playGame("pvp")
-                }
+        ///// ai ai ai ai section
+        createGrid();
+        const divsArr = document.querySelectorAll(".grid-item");
+
+        divsArr.forEach((div) => {
+            div.addEventListener("click", handleAiMove, { once: true });
+        });
+
+        function handleAiMove(event){
+            const div = event.target;
+            let playerSymb;
+            let playerPosition;
+            playerSymb = players().player1.symb
+            playerPosition = div.getAttribute("id");
+            div.textContent = playerSymb;
+            Gameboard.play(playerSymb, playerPosition);
+
+            const winner = Gameboard.check();
+            if (winner) {
+                checkForWin("player1","ai");
+                return;
+            }
+            if (Gameboard.isFull() === true){
+                console.log("full board")
+                deleteGrid()
+                playGame()
                 
             }
-        }else if(player === "player2"){
-            if (boolean === true){
-                player2Score = player2Score + 1
-                // display on board
-                const secondScore = document.querySelector(".secondScore")
-                secondScore.textContent = player2Score
-                console.log(player2Score)
-                if(player2Score === 3){
-                    clearBoard()
-                    player1Score = 0
-                    player2Score = 0
-                    console.log("ya2 u win")
-                }else{
-                    deleteGrid()
-                    console.log("lets continue 2")
-                    playGame("pvp")
+            function ai(){
+                let playerSymb;
+                let playerPosition;
+                // get free div index
+                let emptyDivs = Array.from(divsArr).filter(div => div.textContent === "");
+                if (emptyDivs.length === 0) {
+                    return; // No more moves possible
                 }
-                
-            }
-        }else{
-            if (boolean === true){
-                player2Score = player2Score + 1
-                // display on board
-                const secondScore = document.querySelector(".secondScore")
-                secondScore.textContent = player2Score
-                console.log(player2Score)
-                if(player2Score === 3){
-                    clearBoard()
-                    player1Score = 0
-                    player2Score = 0
-                    console.log("ya2 u win")
-                }else{
-                    deleteGrid()
-                    console.log("lets continue 2")
-                    playGame()
+                let randomIndex = Math.floor(Math.random() * emptyDivs.length);
+                let selectedDiv = emptyDivs[randomIndex]
+                playerSymb = players().ai.symb
+                playerPosition = selectedDiv.getAttribute("id")
+                // remove event listener from selected div
+                selectedDiv.removeEventListener("click",handleAiMove)
+                selectedDiv.textContent = playerSymb
+                Gameboard.play(playerSymb, playerPosition);
+
+                //
+                const winner = Gameboard.check();
+                if (winner) {
+                    checkForWin("ai","ai");
+                    return;
                 }
-                
+                if (Gameboard.isFull() === true){
+                    console.log("full board")
+                    deleteGrid()
+                    playGame() 
             }
+            }
+            ai()
         }
     }
-    
-}
-function playGame(p_v_p){
-    createGrid();
-    console.log("aii ghjd");
-
-    let whichPlayer = true;
-    const divsArr = document.querySelectorAll(".grid-item");
-
-    divsArr.forEach((div) => {
-        div.addEventListener("click", handlePlayerMove, { once: true });
-    });
-
-    function handlePlayerMove(event) {
-        const div = event.target;
-        const playerSymb = whichPlayer ? players().player1.symb : players().player2.symb;
-        const playerPosition = div.getAttribute("id");
-
-        div.textContent = playerSymb;
-        Gameboard.play(playerSymb, playerPosition);
-
-        const winner = Gameboard.check();
-        if (winner) {
-            checkForWin(winner, whichPlayer ? "player1" : "player2");
-            return;
-        }
-
-        whichPlayer = !whichPlayer;
-
-        if (!whichPlayer) {
-            handleAIMove();
-        }
-    }
-
-function handleAIMove() {
-    const emptyDivs = Array.from(divsArr).filter(div => div.textContent === "");
-    
-    if (emptyDivs.length === 0) {
-        return; // No more moves possible
-    }
-
-    const randomIndex = Math.floor(Math.random() * emptyDivs.length);
-    const selectedDiv = emptyDivs[randomIndex];
-    const playerSymb = players().ai.symb;
-    const playerPosition = selectedDiv.getAttribute("id");
-
-    selectedDiv.textContent = playerSymb;
-    Gameboard.play(playerSymb, playerPosition);
-
-    const winner = Gameboard.check();
-    if (winner) {
-        checkForWin(winner, "ai");
-        return;
-    }
-
-    whichPlayer = !whichPlayer;
-}
-
 }
 let playOn = false
 const workingOnDom = (function(){
@@ -361,7 +371,6 @@ const workingOnDom = (function(){
         //player name display
         playerSpan1.textContent = playerName1
         playerSpan2.textContent = "AI"
-
         playGame()
     })
 
